@@ -1,0 +1,20 @@
+.swiper {
+  width: 250px;
+  height: 185px;
+
+  margin-bottom: 28px;
+  @include desktop {
+    width: calc(250px * 2);
+    height: calc(185px * 2);
+  }
+}
+
+.swiper-slide > img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-pagination {
+  text-decoration-color: red;
+}

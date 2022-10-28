@@ -1,0 +1,14 @@
+.education {
+  padding-top: 16px;
+
+  font-size: 20px;
+  margin-bottom: 80px;
+}
+
+.education__wrapper {
+  @include desktop {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 40px;
+  }
+}
