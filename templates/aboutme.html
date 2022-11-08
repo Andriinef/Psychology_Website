@@ -11,25 +11,33 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Raleway&display=swap"
       rel="stylesheet"
     />
+    <!-- <link rel="stylesheet" href="./sass/index.scss" /> -->
     <link href="{% static 'css/index.css' %}" rel="stylesheet" type="text/css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
-</head>
-<body>
+  </head>
+  <body>
     <!-- ❗️❗️❗️ Add partials like so for every page -->
     {% include 'partials/header.html' %}
-    {% include 'partials/aboutmeabout.html' %}
+    {% include 'partials/menu.html' %}
+    {% include 'partials/aboutme/aboutmeabout.html' %}
     {% include 'partials/education.html' %}
-    {% include 'partials/aboutmeliterature.html' %}
+    {% include 'partials/aboutme/aboutmeliterature.html' %}
     {% include 'partials/footer.html' %}
     <!-- <include src="./partials/header.html"></include>
-    <include src="./partials/aboutmeabout.html"></include>
+    <include src="./partials/menu.html"></include>
+    <include src="./partials/aboutme/aboutmeabout.html"></include>
     <include src="./partials/education.html"></include>
-    <include src="./partials/aboutmeliterature.html"></include>
+    <include src="./partials/aboutme/aboutmeliterature.html"></include>
     <include src="./partials/footer.html"></include> -->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <!-- <script type="module" src="./index.js"></script> -->
     <script src="{% static 'index.js' %}"></script>
-</body>
+    <!-- <script src="./scripts/modal.js"></script> -->
+    <script src="{% static 'scripts/modal.js' %}"></script>
+  </body>
 </html>
