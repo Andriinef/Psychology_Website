@@ -6,7 +6,8 @@
     </p>
     <div class="contact-wrapper">
       <div class="">
-        <form action="" class="contact__form">
+        <form action="{% url 'question' %}" class="contact__form" method="post" >
+            {% csrf_token %}
           <label for=""
             ><input
               type="text"

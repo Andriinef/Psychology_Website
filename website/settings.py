@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = "blog.User"
+LOGIN_REDIRECT_URL = '/base/'
+LOGOUT_REDIRECT_URL = '/base/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 
