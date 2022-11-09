@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-
-from blog.forms import UserCreationForm
+# from blog.forms import UserCreationForm
 
 User = get_user_model()
 
@@ -16,4 +15,4 @@ class UserAdmin(UserAdmin):
         }),
     )
 
-    add_form = UserCreationForm
+    # add_form = UserCreationForm
