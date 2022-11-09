@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-from blog.forms import UserCreationForm
+from blog.forms import UsersCreationForm
 
 
 # Create your views here.
@@ -33,12 +33,12 @@ class Register(View):
 
     def get(self, request):
         context = {
-            'form': UserCreationForm()
+            'form': UsersCreationForm()
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = UsersCreationForm(request.POST)
 
         if form.is_valid():
             form.save()
