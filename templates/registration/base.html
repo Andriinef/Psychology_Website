@@ -8,6 +8,6 @@
         <a href="{% url 'logout' %}">Вийти</a>
     {% else %}
         <a href="{% url 'login' %}">Логін</a> |
-        <a href="#">Зареєструватися</a>
+        <a href="{% url 'register' %}">Зареєструватися</a>
     {% endif %}
 {% endblock %}
