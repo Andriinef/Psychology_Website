@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.is_staff %}
+<h6>Кліенти</h6>
+{% for item in all_question %}
+<li>{{ item.username }}</li>
+<li>{{ item.phone }}</li>
+<li>{{ item.question }}</li>
+<li>{{ item.date_created }}</li>
+{% endfor %}
+{% endif %}
+{% endblock %}

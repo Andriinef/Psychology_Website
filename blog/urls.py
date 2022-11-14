@@ -10,7 +10,7 @@ urlpatterns = [
     path('how/', views.how, name="how"),
     path('individual/', views.individual, name="individual"),
     path('base/', views.base, name="base"),
-    path('question/', views.question, name="question"),
+    path('question/', views.ListRepair.as_view(), name="question"),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.Register.as_view(), name='register'),
 ]
