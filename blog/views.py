@@ -1,10 +1,12 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views import View
-from django.shortcuts import render, redirect
-from blog.forms import UserCreationForm
+from django.views.generic import CreateView, ListView
+
+from blog.forms import Add_Question_Fofm, UserCreationForm
 from blog.models import Clients
-from django.views.generic.list import ListView
 
 
 # Create your views here.
@@ -28,8 +30,8 @@ def individual(request):
     return render(request, "individual.html")
 
 
-def question(request):
-    return render(request, "question.html")
+def valid(request):
+    return render(request, "valid.html")
 
 
 def base(request):
@@ -37,12 +39,10 @@ def base(request):
 
 
 class Register(View):
-    template_name = 'registration/register.html'
+    template_name = "registration/register.html"
 
     def get(self, request):
-        context = {
-            'form': UserCreationForm()
-        }
+        context = {"form": UserCreationForm()}
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -51,14 +51,12 @@ class Register(View):
         if form.is_valid():
             form.save()
             # username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password1"]
             user = authenticate(request, email=email, password=password)
             login(request, user)
-            return redirect('base')
-        context = {
-            'form': form
-        }
+            return redirect("base")
+        context = {"form": form}
         return render(request, self.template_name, context)
 
 
@@ -68,5 +66,16 @@ class ListRepair(ListView):
     context_object_name = "all_question"
 
     def get_queryset(self):
-        filter = Clients.objects.all()
+        filter = Clients.objects.order_by("-date_created")
         return filter
+
+
+class AddQuestion(LoginRequiredMixin, CreateView):
+    form_class = Add_Question_Fofm
+    template_name = "index"
+    success_url = reverse_lazy("valid")
+    login_url = reverse_lazy("index")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return dict(list(context.items()))
