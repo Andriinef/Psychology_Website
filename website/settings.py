@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "blog.apps.BlogConfig",
     "django_sass",
-    "phonenumber_field",
+    # "phonenumber_field",
     "crispy_forms",
 ]
 
