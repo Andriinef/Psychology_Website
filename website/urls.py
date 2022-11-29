@@ -20,7 +20,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("blog.urls")),  # blog site
+    path("", include("blog.urls", namespace="blog")),  # blog site
 ]
 
 if settings.DEBUG:

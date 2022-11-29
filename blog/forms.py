@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from blog.models import Clients
+from blog.models import Clients, Status
 
 User = get_user_model()
 
@@ -31,4 +31,18 @@ class Add_Question_Fofm(forms.ModelForm):
             "username",
             "phone",
             "question",
+        ]
+
+
+class Clients_List_Fofm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Clients
+        fields = [
+            "username",
+            "phone",
+            "question",
+            "status",
         ]

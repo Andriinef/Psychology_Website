@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# Users
 AUTH_USER_MODEL = "blog.User"
 LOGIN_REDIRECT_URL = "/base/"
 LOGOUT_REDIRECT_URL = "/base/"
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "blog.apps.BlogConfig",
     "django_sass",
-    # "phonenumber_field",
+    "phonenumber_field",
     "crispy_forms",
 ]
 

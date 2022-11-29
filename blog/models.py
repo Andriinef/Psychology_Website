@@ -1,10 +1,22 @@
-import uuid
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-# from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import RegexValidator
+
+
+class Status(models.Model):
+    status_question = models.CharField("Стан питання", max_length=30,)
+
+    class Meta:
+        verbose_name = "Стан питання"
+        verbose_name_plural = "Стан питань"
+
+    def __str__(self):
+        return self.status_question
+
+    def det_absolute_url(self):
+        return reverse('status_question', kwargs={'status_question': self.id})
 
 
 class User(AbstractUser):
@@ -18,23 +30,20 @@ class User(AbstractUser):
 
 
 class Clients(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(
-        "Кліент",
-        max_length=150,
-    )
-    # slug = models.SlugField(max_length=150, unique=True, verbose_name="URL")
-    # phone = PhoneNumberField(blank=True, help_text='Контактний телефон')
-    phone = models.TextField("Телефон", max_length=250, blank=True, null=True)
-    question = models.TextField("Текст питання", max_length=250, blank=True, null=True)
+    username = models.CharField("Кліент", max_length=150,)
+    phone = models.CharField(max_length=16, blank=True, null=True,)
+    question = models.TextField(
+        "Текст питання", max_length=250, blank=True, null=True)
     date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    status = models.ForeignKey("Status", on_delete=models.PROTECT, default=1,
+                               max_length=30, verbose_name="Стан питання")
 
     class Meta:
         verbose_name = "Кліент"
         verbose_name_plural = "Кліенти"
 
     def __str__(self):
-        return self.username
+        return f"Питання - {self.id}, статус - {self.status}"
 
     def get_absolute_url(self):
         return reverse("username", kwargs={"id": self.id})
