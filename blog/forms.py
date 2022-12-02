@@ -14,6 +14,7 @@ class UserCreationForm(UserCreationForm):
         label=_("Email"),
         max_length=50,
         widget=forms.EmailInput(attrs={"autocomplete": "email"}),
+        help_text="Наприклад: admin@gmail.com",
     )
 
     class Meta(UserCreationForm.Meta):
@@ -21,7 +22,7 @@ class UserCreationForm(UserCreationForm):
         fields = ("username", "email")
 
 
-class Add_Question_Fofm(forms.ModelForm):
+class RecordingQuestionFofm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -34,15 +35,12 @@ class Add_Question_Fofm(forms.ModelForm):
         ]
 
 
-class Clients_List_Fofm(forms.ModelForm):
+class UpdateStatusQuestionFofm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     class Meta:
         model = Clients
         fields = [
-            "username",
-            "phone",
-            "question",
             "status",
         ]

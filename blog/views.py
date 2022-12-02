@@ -3,12 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, ListView
-from django import forms
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from blog.forms import Add_Question_Fofm, UserCreationForm, Clients_List_Fofm
+from blog.forms import UpdateStatusQuestionFofm, UserCreationForm, RecordingQuestionFofm
 from blog.models import Clients, Status
-import re
+from django.db.models import Q
 
 
 # Create your views here.
@@ -32,26 +31,8 @@ def individual(request):
     return render(request, "individual.html")
 
 
-def valid(request):
-    return render(request, "valid.html")
-
-
 def base(request):
     return render(request, "registration/base.html")
-
-
-def edit(request, id):
-    try:
-        client = Clients.objects.get(id=id)
-
-        if request.method == "POST":
-            client.status = redirect.POST.get("status")
-            client.save()
-            return render(request, "blog/clients_list.html")
-        else:
-            return render(request, "blog/client_list.html")
-    except Clients.DoesNotExist:
-        return render(request, "blog/client_list.html")
 
 
 class Register(View):
@@ -75,26 +56,50 @@ class Register(View):
         return render(request, self.template_name, context)
 
 
-class ListRepair(ListView):
+class RecordingQuestion(CreateView):
+    """Recording new questions in the database"""
+    form_class = RecordingQuestionFofm
+    template_name = "valid.html"
+    success_url = reverse_lazy("valid")
+
+
+class ListClientsQuestions(ListView):
+    """Display a list of customer questions"""
     model = Clients
-    template_name = "blog/clients_list.html"
+    template_name = "blog/clients_question.html"
     context_object_name = "all_question"
-    paginate_by = 5
+    paginate_by = 100
 
     def get_queryset(self, *args, **kwargs):
         filter = Clients.objects.order_by("-date_created")
         return filter
 
 
-class AddQuestion(CreateView):
-    form_class = Add_Question_Fofm
-    template_name = "blog/error_contact.html"
-    success_url = reverse_lazy("valid")
+class UpdateStatusQuestion(UpdateView):
+    """Updata the status of a question"""
+    model = Clients
+    form_class = UpdateStatusQuestionFofm
+    success_url = reverse_lazy("clients_question")
 
-    def get_context_data(self, *args, **kwargs):
+
+class ClientsQuestionsDelete(DeleteView):
+    model = Clients
+    template_name = "blog/delete.html"
+    context_object_name = "client"
+    success_url = reverse_lazy("clients_question")
+
+
+class SearchResultsView(ListView):
+    model = Clients
+    template_name = "blog/search.html"
+    context_object_name = "all_question"
+
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["search"] = f"search={self.request.GET.get('search')}&"
         return context
 
-
-class Clients_List(CreateView):
-   pass
+    def get_queryset(self):
+        query = self.request.GET.get('search', None)
+        object_list = Clients.objects.filter(Q(username__icontains=query) | Q(phone__icontains=query) | Q(question__icontains=query))
+        return object_list

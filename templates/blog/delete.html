@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.is_staff %}
+<form action="" method="post">
+  {% csrf_token %}
+  <h3>
+    Ви впевнені, що хочете видалити Кліент "{{ client.username }}"? Всі
+    пов'язані записи, що перелічені, будуть видалені.
+  </h3>
+  <div style="margin-top: 20px">
+    <button type="submit">Так, я впевнений</button><br />
+  </div>
+</form>
+<div style="margin-top: 20px">
+  <a href="{% url 'clients_question' %}">
+    <button type="submit">Ні, повернутись назад</button>
+  </a>
+</div>
+{% endif %}
+{% endblock %}

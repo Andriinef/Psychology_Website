@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% block content %}
+{% if request.user.is_staff %}
+<table class="table table-bo{{ item.username }}rdered">
+  <thead>
+    <tr>
+      <th scope="col">Час</th>
+      <th scope="col">Им`я</th>
+      <th scope="col">Телефон</th>
+      <th scope="col">Питання</th>
+      <th scope="col">Статус питання</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in all_question %}
+    <tr>
+      <th scope="row">{{ item.date_created }}</th>
+      <td>{{ item.username }}</td>
+      <td>{{ item.phone }}</td>
+      <td>{{ item.question }}</td>
+      <td>
+        <form action="{% url 'clients_status' pk=item.id %}" method="post">
+            {% csrf_token %}
+          <li class="dropdown">
+            <div class="nav-item dropdown">
+              <a
+                class="dropdown-toggle nav-link active"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+                href="#"
+                >{{ item.status }}</a
+              >
+              <div class="dropdown-menu">
+                {% get_status_question as status_question %}
+                {% for item_status in status_question %}
+                <button type="submit" name="status" value="{{item_status.id}}">{{item_status.status_question}}</button><br>
+                {% endfor %}
+              </div>
+            </div>
+          </li>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

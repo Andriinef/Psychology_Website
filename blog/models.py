@@ -16,7 +16,7 @@ class Status(models.Model):
         return self.status_question
 
     def det_absolute_url(self):
-        return reverse('status_question', kwargs={'status_question': self.id})
+        return reverse("status_question", kwargs={"status_question": self.id})
 
 
 class User(AbstractUser):
@@ -43,7 +43,7 @@ class Clients(models.Model):
         verbose_name_plural = "Кліенти"
 
     def __str__(self):
-        return f"Питання - {self.id}, статус - {self.status}"
+        return self.username
 
     def get_absolute_url(self):
-        return reverse("username", kwargs={"id": self.id})
+        return reverse("username", kwargs={"username": self.id})

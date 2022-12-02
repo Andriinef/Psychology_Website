@@ -3,8 +3,6 @@ from django.urls import include, path
 from blog import views
 
 
-app_name = "blog"
-
 urlpatterns = [
     path("", views.index, name="index"),
     path("aboutme/", views.aboutme, name="aboutme"),
@@ -12,11 +10,11 @@ urlpatterns = [
     path("how/", views.how, name="how"),
     path("individual/", views.individual, name="individual"),
     path("base/", views.base, name="base"),
-    path("valid/", views.valid, name="valid"),
-    path("question/", views.ListRepair.as_view(), name="question"),
-    path("add_question/", views.AddQuestion.as_view(), name="add_question"),
-    path("clients_list/", views.Clients_List.as_view(), name="clients_list"),
-    # path("question/<int:id>/", views.edit, name="edit"),
+    path("valid/", views.RecordingQuestion.as_view(), name="valid"),
+    path("clients_question/", views.ListClientsQuestions.as_view(), name="clients_question"),
+    path("clients_question/<int:pk>/delete/", views.ClientsQuestionsDelete.as_view(), name="delete"),
+    path("clients_question/<int:pk>", views.UpdateStatusQuestion.as_view(), name="clients_status"),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
     path("accounts/", include("django.contrib.auth.urls")),
     path("register/", views.Register.as_view(), name="register"),
 ]
