@@ -17,4 +17,5 @@ urlpatterns = [
     path('search/', views.SearchResultsView.as_view(), name='search_results'),
     path("accounts/", include("django.contrib.auth.urls")),
     path("register/", views.Register.as_view(), name="register"),
+    path("password_reset_valid/", views.password_reset_valid, name="password_reset_valid")
 ]

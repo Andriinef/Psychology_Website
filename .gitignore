@@ -3,8 +3,7 @@
 .vscode/
 .idea/
 venv/
-Pipfile
-Pipfile.lock
+.venv/
 
 # Logs
 logs
@@ -77,8 +76,8 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-.env.test
+# .env
+# .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .parcel-cache
@@ -123,6 +122,7 @@ __pycache__/
 .djcache/
 __pycache__/
 django_cache/
+*.sqlite3
 
 
 # txt

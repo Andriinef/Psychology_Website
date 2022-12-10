@@ -35,6 +35,10 @@ def base(request):
     return render(request, "registration/base.html")
 
 
+def password_reset_valid(request):
+    return render(request, "registration/base.html")
+
+
 class Register(View):
     template_name = "registration/register.html"
 

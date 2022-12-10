@@ -12,16 +12,23 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Loading ENV
+# https://pypi.org/project/python-dotenv/
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4&%190bk0mo8&ukzh#xq1z^jrsk_^x^r^jm+6*zdk@t@n0**aq"
+# SECRET_KEY = "django-insecure-4&%190bk0mo8&ukzh#xq1z^jrsk_^x^r^jm+6*zdk@t@n0**aq"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,6 +40,7 @@ AUTH_USER_MODEL = "blog.User"
 LOGIN_REDIRECT_URL = "/base/"
 LOGOUT_REDIRECT_URL = "/base/"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 # Application definition
 
@@ -84,10 +92,23 @@ WSGI_APPLICATION = "website.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
+     "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # "HOST": os.getenv["DB_HOST"],
+        # "NAME": os.getenv["DB_NAME"],
+        # "USER": os.getenv["DB_USER"],
+        # "PASSWORD": os.getenv["DB_PASSWORD"],
+        # "PORT": os.getenv["DB_PORT"],
+        "HOST": "localhost",
+        "PORT": "5432",
+        "NAME": "postgres",
+        "USER": "andrii",
+        "PASSWORD": "5048",
+     }
 }
 
 
@@ -125,11 +146,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_URL = '/static/'
 
-MEDIA_URL = "/images/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "images/")
+MEDIA_URL = '/images/'
+
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
