@@ -27,7 +27,7 @@ load_dotenv(dotenv_path=env_path)
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-4&%190bk0mo8&ukzh#xq1z^jrsk_^x^r^jm+6*zdk@t@n0**aq"
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -39,7 +39,17 @@ ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = "blog.User"
 LOGIN_REDIRECT_URL = "/base/"
 LOGOUT_REDIRECT_URL = "/base/"
+
+# email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL")
 
 
 # Application definition
