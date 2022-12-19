@@ -1,23 +1,27 @@
 from os import getenv, path
 from pathlib import Path
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+SRC_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = SRC_DIR.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-SECRET_KEY = getenv('SECRET_KEY')
+# SECRET_KEY = getenv("DJANGO_SECRET_KEY", default="INVALID")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = getenv("DJANGO_DEBUG", default=False)
+
+# ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS", default="").split(",")
+
+SECRET_KEY = "django-insecure-4&%190bk0mo8&ukzh#xq1z^jrsk_^x^r^jm+6*zdk@t@n0**aq"
+
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 # Users
 AUTH_USER_MODEL = "blog.User"
 LOGIN_REDIRECT_URL = "/base/"
@@ -64,7 +68,7 @@ ROOT_URLCONF = "website.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [path.join(BASE_DIR, "templates")],
+        "DIRS": [path.join(ROOT_DIR, "src/templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -88,19 +92,22 @@ DATABASES = {
     #     "ENGINE": "django.db.backends.sqlite3",
     #     "NAME": BASE_DIR / "db.sqlite3",
     # }
-     "default": {
+    # "default": {
+    #    "ENGINE": getenv("DB_ENGINE"),
+    #    "HOST": getenv("DB_HOST"),
+    #    "NAME": getenv("DB_NAME"),
+    #    "USER": getenv("DB_USER"),
+    #   "PASSWORD": getenv("DB_PASSWORD"),
+    #    "PORT": getenv("DB_PORT"),
+    # }
+    "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "HOST": "localhost",
         "NAME": "postgres",
         "USER": "andrii",
         "PASSWORD": "5048",
         "PORT": "5432",
-        # "HOST": getenv["DB_HOST"],
-        # "NAME": getenv["DB_NAME"],
-        # "USER": getenv["DB_USER"],
-        # "PASSWORD": getenv["DB_PASSWORD"],
-        # "PORT": getenv["DB_PORT"],
-     }
+    }
 }
 
 
@@ -138,17 +145,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-MEDIA_URL = '/images/'
+# STATICFILES_DIRS = [ROOT_DIR / "src/static"]
 
-if DEBUG:
-    STATICFILES_DIRS = [path.join(BASE_DIR, 'static')]
+STATIC_ROOT = ROOT_DIR / "src/static"
 
-else:
-    STATIC_ROOT = path.join(BASE_DIR, 'static')
+MEDIA_URL = "/images/"
 
-MEDIA_ROOT = path.join(BASE_DIR, 'images')
+MEDIA_ROOT = ROOT_DIR / "src/images"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -156,5 +162,5 @@ MEDIA_ROOT = path.join(BASE_DIR, 'images')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    path.join(BASE_DIR, "static/scss"),
+    path.join(ROOT_DIR, "static/scss"),
 ]
